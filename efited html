@@ -1,4 +1,1962 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North Pole Pen Pals - Magical Elf Friends for Kids</title>
 
+    <!-- SEO & SOCIAL META TAGS -->
+    <meta name="description" content="Connect with magical elves from Santa's workshop! A safe, fun messaging app where kids can have a pen pal elf friend all year round.">
+    <meta name="keywords" content="Elf Pen Pal, Letters from the North Pole, Santa Letters, Christmas App for Kids, Elf Friend, Santa Pen Pal, Christmas Magic, North Pole Letters, Elf Mail, Santa's Workshop">
+    <meta name="author" content="North Pole Pen Pals">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://northpolepenpals.vercel.app/">
+    <meta property="og:title" content="North Pole Pen Pals - Magical Elf Friends for Kids">
+    <meta property="og:description" content="Connect with magical elves from Santa's workshop! A safe, fun messaging app for kids.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/000000/FFD700?text=North+Pole+Pen+Pals">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://northpolepenpals.vercel.app/">
+    <meta property="twitter:title" content="North Pole Pen Pals - Magical Elf Friends for Kids">
+    <meta property="twitter:description" content="Connect with magical elves from Santa's workshop! A safe, fun messaging app for kids.">
+    <meta property="twitter:image" content="https://via.placeholder.com/1200x630/000000/FFD700?text=North+Pole+Pen+Pals">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2300ff00'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='%23000000'>❄️</text></svg>">
+
+    <style>
+        /* ===== CSS VARIABLES (DARK THEME) ===== */
+        :root {
+            /* Primary Colors */
+            --primary: #00ff00;       /* Bright Green */
+            --primary-dark: #008000;  /* Deep Green */
+            --secondary: #8b0000;      /* Deep Red */
+            --accent: #4b0082;         /* Deep Purple */
+            --accent-light: #9400d3;   /* Bright Purple */
+            --gold: #FFD700;           /* Gold */
+            --blue: #0000ff;           /* Bright Blue */
+            --blue-dark: #00008b;      /* Deep Blue */
+
+            /* Background & Text */
+            --bg-dark: #000000;        /* Black */
+            --bg-darker: #101010;
+            --bg-card: rgba(20, 20, 20, 0.9);
+            --text: #ffffff;           /* White */
+            --text-soft: #e0e0e0;      /* Soft White */
+            --snow: #f8f8ff;           /* Snow White */
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--blue));
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--accent));
+            --gradient-gold: linear-gradient(135deg, var(--gold), #ffcc00);
+
+            /* Shadows */
+            --shadow-glow-green: 0 0 10px var(--primary), 0 0 20px var(--primary);
+            --shadow-glow-gold: 0 0 10px var(--gold), 0 0 20px var(--gold);
+            --shadow-glow-red: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+
+            /* Typography */
+            --font-main: 'Comic Sans MS', 'Chalkduster', 'cursive', sans-serif;
+            --font-heading: 'Mountains of Christmas', 'Papyrus', fantasy;
+        }
+
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== SNOW ANIMATION ===== */
+        .snow {
+            position: fixed;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: var(--snow);
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+            text-shadow: 0 0 5px var(--snow);
+            font-size: 15px;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== TWINKLING LIGHTS ===== */
+        .lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .light {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ===== CHRISTMAS DECORATIONS ===== */
+        .decoration {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .tree {
+            bottom: -50px;
+            left: -20px;
+            width: 200px;
+            height: 400px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><polygon points="50,10 90,100 10,100" fill="%23006400"/><polygon points="50,40 80,130 20,130" fill="%23008000"/><polygon points="50,70 70,160 30,160" fill="%2300a000"/><rect x="45" y="170" width="10" height="30" fill="%238B4513"/></svg>') no-repeat;
+            background-size: contain;
+            opacity: 0.8;
+        }
+
+        .present {
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            box-shadow: var(--shadow-glow-green);
+            transform: rotate(-5deg);
+        }
+
+        .present::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 30%;
+            width: 40%;
+            height: 20px;
+            background: var(--bg-dark);
+            border-radius: 5px 5px 0 0;
+        }
+
+        .candy-cane {
+            top: 100px;
+            right: 10px;
+            width: 20px;
+            height: 120px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--primary) 0px,
+                var(--primary) 10px,
+                var(--snow) 10px,
+                var(--snow) 20px
+            );
+            border-radius: 10px;
+            transform: rotate(45deg);
+            box-shadow: var(--shadow-glow-green);
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: var(--gold);
+            text-shadow: var(--shadow-glow-gold);
+            margin-bottom: 10px;
+            font-family: var(--font-heading);
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: var(--shadow-glow-gold); }
+            to { text-shadow: 0 0 20px var(--gold), 0 0 30px var(--gold), 0 0 40px var(--gold); }
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: var(--text-soft);
+            margin-bottom: 20px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: bold;
+            color: var(--bg-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            box-shadow: var(--shadow-glow-green);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            box-shadow: var(--shadow-glow-red);
+            color: var(--snow);
+        }
+
+        .btn-gold {
+            background: var(--gradient-gold);
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* ===== LANDING PAGE ===== */
+        .landing {
+            text-align: center;
+            padding: 50px 0;
+            position: relative;
+        }
+
+        .landing h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .landing p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-soft);
+        }
+
+        .landing-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        /* ===== FORMS ===== */
+        .form-container {
+            max-width: 500px;
+            margin: 30px auto;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--gold);
+            box-shadow: var(--shadow-glow-gold);
+            position: relative;
+        }
+
+        .form-container::before {
+            content: '❄️';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            color: var(--gold);
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: var(--gold);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--primary);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-soft);
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ===== ELF SELECTION ===== */
+        .elf-selection-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .elf-selection-header h2 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .elf-selection-header p {
+            color: var(--text-soft);
+            font-size: 1.1rem;
+        }
+
+        .elf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .elf-card {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .elf-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .elf-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--primary);
+            border-color: var(--gold);
+        }
+
+        .elf-card.selected {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        .elf-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+            display: block;
+            border: 3px solid var(--gold);
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        .elf-card h3 {
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .elf-card .bio {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .elf-card .details {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+        }
+
+        .elf-card .details span {
+            display: block;
+            margin: 3px 0;
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .elf-profile {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gold);
+        }
+
+        .elf-profile img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            box-shadow: var(--shadow-glow-gold);
+            margin-bottom: 10px;
+        }
+
+        .elf-profile h4 {
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .elf-profile p {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 10px;
+            color: var(--text-soft);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .main-content {
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        /* ===== CHAT INTERFACE ===== */
+        .chat-container {
+            height: 500px;
+            overflow-y: auto;
+            border: 1px solid var(--primary);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 0 10px var(--primary);
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            color: var(--bg-dark);
+        }
+
+        .message.elf {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+            color: var(--snow);
+        }
+
+        .message-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: 2px solid var(--gold);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .message-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .message-input button {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            background: var(--gradient-gold);
+            color: var(--bg-dark);
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .message-input button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        /* ===== COUNTDOWN TIMER ===== */
+        .countdown {
+            text-align: center;
+            padding: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .countdown h3 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .countdown-time {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-unit {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--gold);
+            border-radius: 10px;
+            padding: 15px 20px;
+            min-width: 80px;
+        }
+
+        .countdown-unit div {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: var(--shadow-glow-green);
+        }
+
+        .countdown-unit span {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* ===== INBOX ===== */
+        .inbox-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .letter-preview {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .letter-preview:hover {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: var(--gold);
+        }
+
+        .letter-preview h4 {
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .letter-preview p {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
+        .letter-preview .meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            margin-top: 5px;
+        }
+
+        /* ===== DAILY INSPIRATION ===== */
+        .inspiration-container {
+            text-align: center;
+            padding: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .inspiration-container::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            color: var(--gold);
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .inspiration-container h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .inspiration-quote {
+            font-size: 1.4rem;
+            color: var(--snow);
+            font-style: italic;
+            margin-bottom: 15px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .inspiration-author {
+            color: var(--text-soft);
+            font-size: 1rem;
+        }
+
+        /* ===== PARENT DASHBOARD ===== */
+        .parent-controls {
+            margin-top: 30px;
+        }
+
+        .parent-controls h3 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-shadow: var(--shadow-glow-gold);
+        }
+
+        .child-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .child-card {
+            background: var(--bg-card);
+            border: 1px solid var(--primary);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .child-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .child-card h4 {
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .child-card p {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
+        .subscription-info {
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .subscription-info h4 {
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .subscription-info p {
+            color: var(--text-soft);
+            margin-bottom: 15px;
+        }
+
+        .subscription-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .plan-card {
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .plan-card h4 {
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .plan-card .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .plan-card .features {
+            list-style: none;
+            margin-bottom: 15px;
+            color: var(--text-soft);
+        }
+
+        .plan-card .features li {
+            margin-bottom: 5px;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 1;
+            }
+
+            .main-content {
+                order: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            .landing-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                margin: 8px 0;
+            }
+
+            .elf-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+
+            .chat-container {
+                height: 400px;
+            }
+
+            .countdown-time {
+                gap: 10px;
+            }
+
+            .countdown-unit {
+                min-width: 70px;
+                padding: 10px 15px;
+            }
+
+            .countdown-unit div {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .landing h2 {
+                font-size: 1.8rem;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .elf-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-time {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .countdown-unit {
+                min-width: 100%;
+            }
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 10px; }
+        .mt-2 { margin-top: 20px; }
+        .mt-3 { margin-top: 30px; }
+        .mb-1 { margin-bottom: 10px; }
+        .mb-2 { margin-bottom: 20px; }
+        .mb-3 { margin-bottom: 30px; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Snow Animation Container -->
+    <div class="snow" id="snow"></div>
+
+    <!-- Twinkling Lights Container -->
+    <div class="lights" id="lights"></div>
+
+    <!-- Christmas Decorations -->
+    <div class="decoration tree"></div>
+    <div class="decoration present"></div>
+    <div class="decoration candy-cane"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>❄️ North Pole Pen Pals ❄️</h1>
+            <p>Magical Elf Friends for Kids</p>
+        </header>
+
+        <!-- ===== LANDING PAGE ===== -->
+        <div class="landing" id="landing">
+            <h2>Start Your Magical Friendship</h2>
+            <p>Connect with a real elf from Santa's workshop! Exchange messages, share stories, and experience the magic of Christmas all year round.</p>
+            <div class="landing-buttons">
+                <a href="#" class="btn btn-primary" onclick="showParentLogin()">Parent Login</a>
+                <a href="#" class="btn btn-primary" onclick="showParentRegister()">Parent Register</a>
+                <a href="#" class="btn btn-secondary" onclick="showKidLogin()">Kid Login</a>
+                <a href="#" class="btn btn-secondary" onclick="showKidRegister()">Kid Register</a>
+            </div>
+        </div>
+
+        <!-- ===== PARENT LOGIN ===== -->
+        <div class="form-container hidden" id="parent-login">
+            <h2 class="text-center">Parent Login</h2>
+            <form id="parentLoginForm">
+                <div class="form-group">
+                    <label for="parent-email">Email</label>
+                    <input type="email" id="parent-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent-password">Password</label>
+                    <input type="password" id="parent-password" placeholder="Enter your password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-gold">Login</button>
+                    <p class="mt-2">Don't have an account? <a href="#" onclick="showParentRegister()" style="color: var(--gold);">Register here</a></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- ===== PARENT REGISTER ===== -->
+        <div class="form-container hidden" id="parent-register">
+            <h2 class="text-center">Parent Registration</h2>
+            <form id="parentRegisterForm">
+                <div class="form-group">
+                    <label for="parent-name">Full Name</label>
+                    <input type="text" id="parent-name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent-reg-email">Email</label>
+                    <input type="email" id="parent-reg-email" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent-reg-password">Password</label>
+                    <input type="password" id="parent-reg-password" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent-confirm-password">Confirm Password</label>
+                    <input type="password" id="parent-confirm-password" placeholder="Confirm your password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-gold">Register</button>
+                    <p class="mt-2">Already have an account? <a href="#" onclick="showParentLogin()" style="color: var(--gold);">Login here</a></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- ===== KID LOGIN ===== -->
+        <div class="form-container hidden" id="kid-login">
+            <h2 class="text-center">Kid Login</h2>
+            <form id="kidLoginForm">
+                <div class="form-group">
+                    <label for="kid-email">Email</label>
+                    <input type="email" id="kid-email" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="kid-password">Password</label>
+                    <input type="password" id="kid-password" placeholder="Your password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-gold">Login</button>
+                    <p class="mt-2">Don't have an account? <a href="#" onclick="showKidRegister()" style="color: var(--gold);">Register here</a></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- ===== KID REGISTRATION ===== -->
+        <div class="form-container hidden" id="kid-register">
+            <h2 class="text-center">Create Your Account</h2>
+            <form id="kidRegisterForm">
+                <div class="form-group">
+                    <label for="kid-name">First Name</label>
+                    <input type="text" id="kid-name" placeholder="Your first name" required>
+                </div>
+                <div class="form-group">
+                    <label for="kid-age">Age</label>
+                    <input type="number" id="kid-age" min="3" max="12" placeholder="Your age" required>
+                </div>
+                <div class="form-group">
+                    <label for="kid-color">Favorite Color</label>
+                    <select id="kid-color" required>
+                        <option value="">Select a color</option>
+                        <option value="red">Red</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
+                        <option value="gold">Gold</option>
+                        <option value="purple">Purple</option>
+                        <option value="pink">Pink</option>
+                        <option value="white">White</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kid-activity">Favorite Christmas Activity</label>
+                    <select id="kid-activity" required>
+                        <option value="">Select an activity</option>
+                        <option value="decorating">Decorating the tree</option>
+                        <option value="baking">Baking cookies</option>
+                        <option value="presents">Opening presents</option>
+                        <option value="carols">Singing carols</option>
+                        <option value="snowman">Building snowmen</option>
+                        <option value="movies">Watching Christmas movies</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-gold" onclick="showElfSelection()">Next: Choose Your Elf</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ===== ELF SELECTION ===== -->
+        <div class="hidden" id="elf-selection">
+            <div class="form-container">
+                <div class="elf-selection-header">
+                    <h2>Choose Your Elf Friend</h2>
+                    <p>Select an elf who will be your magical pen pal from the North Pole!</p>
+                </div>
+
+                <div class="elf-grid" id="elf-grid">
+                    <!-- Elves will be populated by JavaScript -->
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-gold" onclick="selectElf()">Confirm My Elf</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== KID DASHBOARD ===== -->
+        <div class="hidden" id="kid-dashboard">
+            <div class="dashboard">
+                <div class="sidebar">
+                    <h3>Your Elf Friend</h3>
+                    <div class="elf-profile">
+                        <img src="https://via.placeholder.com/150" alt="Elf Avatar" id="selected-elf-avatar">
+                        <h4 id="selected-elf-name">Your Elf</h4>
+                        <p id="selected-elf-bio">Waiting to meet you!</p>
+                    </div>
+                    <ul class="sidebar-nav">
+                        <li><a href="#" onclick="showMessages()" class="active" id="nav-messages">Messages</a></li>
+                        <li><a href="#" onclick="showInbox()" id="nav-inbox">Inbox</a></li>
+                        <li><a href="#" onclick="showCountdown()" id="nav-countdown">Christmas Countdown</a></li>
+                        <li><a href="#" onclick="showDailyInspiration()" id="nav-inspiration">Daily Inspiration</a></li>
+                    </ul>
+                    <button class="btn btn-secondary mt-3" onclick="logout()" style="width: 100%;">Logout</button>
+                </div>
+
+                <div class="main-content">
+                    <!-- Messages Section -->
+                    <div id="messages-section">
+                        <h2>Chat with <span id="elf-name-in-chat">Your Elf</span></h2>
+                        <div class="chat-container" id="chat-container">
+                            <div class="message elf">Hello there, little friend! I'm so excited to be your pen pal from the North Pole! What would you like to talk about today?</div>
+                        </div>
+                        <div class="message-input">
+                            <input type="text" id="message-input" placeholder="Type your message here..." autocomplete="off">
+                            <button onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+
+                    <!-- Inbox Section -->
+                    <div id="inbox-section" class="hidden">
+                        <h2>Your Letters</h2>
+                        <div class="inbox-list" id="inbox-list">
+                            <p>No letters yet. Start a conversation with your elf!</p>
+                        </div>
+                    </div>
+
+                    <!-- Countdown Section -->
+                    <div id="countdown-section" class="hidden">
+                        <div class="countdown">
+                            <h3>⏳ Countdown to Christmas ⏳</h3>
+                            <div class="countdown-time">
+                                <div class="countdown-unit">
+                                    <div id="days">00</div>
+                                    <span>Days</span>
+                                </div>
+                                <div class="countdown-unit">
+                                    <div id="hours">00</div>
+                                    <span>Hours</span>
+                                </div>
+                                <div class="countdown-unit">
+                                    <div id="minutes">00</div>
+                                    <span>Minutes</span>
+                                </div>
+                                <div class="countdown-unit">
+                                    <div id="seconds">00</div>
+                                    <span>Seconds</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Inspiration Section -->
+                    <div id="inspiration-section" class="hidden">
+                        <div class="inspiration-container">
+                            <h2>Today's Christmas Inspiration</h2>
+                            <div class="inspiration-quote" id="daily-inspiration">
+                                "Kindness is Christmas magic."
+                            </div>
+                            <div class="inspiration-author">- Santa Claus</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PARENT DASHBOARD ===== -->
+        <div class="hidden" id="parent-dashboard">
+            <div class="form-container">
+                <h2 class="text-center">Parent Dashboard</h2>
+
+                <div class="parent-controls">
+                    <h3>Your Children</h3>
+                    <div class="child-list" id="child-list">
+                        <p>No children registered yet.</p>
+                    </div>
+
+                    <div class="mt-3">
+                        <h3>Subscription</h3>
+                        <div class="subscription-info">
+                            <p>You are currently on the <strong>Free Plan</strong>.</p>
+                            <p>Upgrade to unlimited messaging for your children!</p>
+
+                            <div class="subscription-plans">
+                                <div class="plan-card">
+                                    <h4>Monthly</h4>
+                                    <div class="price">$4.99/month</div>
+                                    <ul class="features">
+                                        <li>Unlimited messages</li>
+                                        <li>All elf friends</li>
+                                        <li>Priority support</li>
+                                    </ul>
+                                    <button class="btn btn-gold">Choose Plan</button>
+                                </div>
+                                <div class="plan-card">
+                                    <h4>Annual</h4>
+                                    <div class="price">$39.99/year</div>
+                                    <ul class="features">
+                                        <li>Unlimited messages</li>
+                                        <li>All elf friends</li>
+                                        <li>Priority support</li>
+                                        <li>2 months free!</li>
+                                    </ul>
+                                    <button class="btn btn-gold">Choose Plan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== ELF DATA =====
+        const elves = [
+            // Boy Elves
+            {
+                id: 1,
+                name: "Jingle",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jingle&backgroundColor=00ff00&radius=50",
+                bio: "Loves sledding down snowy hills!",
+                personality: "Funny and adventurous",
+                hobbies: ["Sledding", "Testing new toys", "Telling jokes"],
+                job: "Toy Tester",
+                treats: "Peppermint candy canes",
+                funFact: "Once slid from North Pole to South Pole on a candy cane sled!"
+            },
+            {
+                id: 2,
+                name: "Tinsel",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Tinsel&backgroundColor=00ff00&radius=50",
+                bio: "The most artistic elf in Santa's workshop",
+                personality: "Creative and dreamy",
+                hobbies: ["Drawing", "Painting", "Making decorations"],
+                job: "Head Decorator",
+                treats: "Gingerbread cookies",
+                funFact: "Painted a mural so beautiful it made Santa cry happy tears!"
+            },
+            {
+                id: 3,
+                name: "Pepper",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pepper&backgroundColor=00ff00&radius=50",
+                bio: "Fastest gift wrapper in the North Pole",
+                personality: "Energetic and precise",
+                hobbies: ["Wrapping presents", "Racing", "Collecting ribbons"],
+                job: "Gift Wrapper",
+                treats: "Chocolate peppermint bark",
+                funFact: "Wrapped 120 presents in 60 seconds - North Pole record!"
+            },
+            {
+                id: 4,
+                name: "Frosty",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Frosty&backgroundColor=00ffff&radius=50",
+                bio: "Official snowman builder of the North Pole",
+                personality: "Cool and calm",
+                hobbies: ["Building snowmen", "Ice sculpting", "Snowball fights"],
+                job: "Snow Manager",
+                treats: "Ice cream",
+                funFact: "Built a snowman so tall it touched the Northern Lights!"
+            },
+            {
+                id: 5,
+                name: "Chip",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Chip&backgroundColor=ff0000&radius=50",
+                bio: "The handiest elf around",
+                personality: "Helpful and clever",
+                hobbies: ["Fixing toys", "Building things", "Inventing"],
+                job: "Head Mechanic",
+                treats: "Peanut brittle",
+                funFact: "Invented the self-tying shoelace!"
+            },
+            {
+                id: 6,
+                name: "Blitz",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Blitz&backgroundColor=0000ff&radius=50",
+                bio: "Fastest elf runner in the North Pole",
+                personality: "Speedy and determined",
+                hobbies: ["Running", "Racing", "Delivering presents"],
+                job: "Delivery Elf",
+                treats: "Energy candy",
+                funFact: "Ran around the entire North Pole in 3 hours!"
+            },
+            {
+                id: 7,
+                name: "Snickerdoodle",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Snickerdoodle&backgroundColor=ff00ff&radius=50",
+                bio: "Head baker at the North Pole",
+                personality: "Sweet and generous",
+                hobbies: ["Baking", "Decorating cookies", "Trying new recipes"],
+                job: "Head Baker",
+                treats: "Snickerdoodle cookies",
+                funFact: "His cookies are so good even the reindeer sneak some!"
+            },
+            {
+                id: 8,
+                name: "Wink",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Wink&backgroundColor=ffff00&radius=50",
+                bio: "The funniest elf at the North Pole",
+                personality: "Playful and funny",
+                hobbies: ["Telling jokes", "Playing pranks", "Making people laugh"],
+                job: "Head of Fun",
+                treats: "Jelly beans",
+                funFact: "Made Santa laugh so hard his belly shook for an hour!"
+            },
+            {
+                id: 9,
+                name: "Dasher",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Dasher&backgroundColor=008000&radius=50",
+                bio: "Helps take care of the reindeer",
+                personality: "Responsible and kind",
+                hobbies: ["Reindeer care", "Flying lessons", "Storytelling"],
+                job: "Reindeer Handler",
+                treats: "Carrots",
+                funFact: "Can speak reindeer and translates for Santa!"
+            },
+            {
+                id: 10,
+                name: "Jolly",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jolly&backgroundColor=ff0000&radius=50",
+                bio: "Santa's official happiness ambassador",
+                personality: "Joyful and optimistic",
+                hobbies: ["Singing", "Dancing", "Spreading cheer"],
+                job: "Happiness Ambassador",
+                treats: "Fruitcake",
+                funFact: "Never had a bad day in his life!"
+            },
+
+            // Girl Elves
+            {
+                id: 11,
+                name: "Holly",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Holly&backgroundColor=ff00ff&radius=50",
+                bio: "Loves baking cookies and feeding the reindeer",
+                personality: "Sweet and caring",
+                hobbies: ["Baking", "Feeding reindeer", "Gardening"],
+                job: "Reindeer Baker",
+                treats: "Sugar cookies",
+                funFact: "Once baked a cookie big enough for all nine reindeer!"
+            },
+            {
+                id: 12,
+                name: "Misty",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Misty&backgroundColor=800080&radius=50",
+                bio: "Official storyteller of the North Pole",
+                personality: "Wise and imaginative",
+                hobbies: ["Reading", "Storytelling", "Writing"],
+                job: "Head Storyteller",
+                treats: "Hot cocoa",
+                funFact: "Has read every book in Santa's library twice!"
+            },
+            {
+                id: 13,
+                name: "Twinkle",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Twinkle&backgroundColor=ffff00&radius=50",
+                bio: "In charge of all the lights at the North Pole",
+                personality: "Bright and cheerful",
+                hobbies: ["Decorating with lights", "Stargazing", "Making things sparkle"],
+                job: "Lighting Director",
+                treats: "Star-shaped candies",
+                funFact: "Created a light display visible from space!"
+            },
+            {
+                id: 14,
+                name: "Sparkle",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sparkle&backgroundColor=ff00ff&radius=50",
+                bio: "Official glitter expert of the North Pole",
+                personality: "Glamorous and fun",
+                hobbies: ["Collecting glitter", "Making decorations", "Dancing"],
+                job: "Glitter Specialist",
+                treats: "Glittery cupcakes",
+                funFact: "Made a snowman entirely out of glitter that sparkled for a year!"
+            },
+            {
+                id: 15,
+                name: "Candy",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Candy&backgroundColor=ff0080&radius=50",
+                bio: "Head candy maker at the North Pole",
+                personality: "Sweet and inventive",
+                hobbies: ["Making candy", "Trying new flavors", "Decorating"],
+                job: "Head Candy Maker",
+                treats: "Candy canes",
+                funFact: "Invented candy that changes flavor with every lick!"
+            },
+            {
+                id: 16,
+                name: "Belle",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Belle&backgroundColor=ff8000&radius=50",
+                bio: "Lead singer in the North Pole choir",
+                personality: "Talented and confident",
+                hobbies: ["Singing", "Dancing", "Performing"],
+                job: "Choir Director",
+                treats: "Honey cakes",
+                funFact: "Once sang a lullaby that put the entire North Pole to sleep!"
+            },
+            {
+                id: 17,
+                name: "Pippa",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pippa&backgroundColor=8000ff&radius=50",
+                bio: "Most organized elf at the North Pole",
+                personality: "Organized and efficient",
+                hobbies: ["Making lists", "Organizing", "Planning"],
+                job: "Present Organizer",
+                treats: "Licorice",
+                funFact: "Has a list for everything - even a list of all her lists!"
+            },
+            {
+                id: 18,
+                name: "Luna",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Luna&backgroundColor=00ffff&radius=50",
+                bio: "Santa's official stargazer",
+                personality: "Dreamy and wise",
+                hobbies: ["Stargazing", "Reading constellations", "Making wishes"],
+                job: "Head Stargazer",
+                treats: "Moon pies",
+                funFact: "Spotted a new constellation named 'Santa's Sleigh'!"
+            },
+            {
+                id: 19,
+                name: "Daisy",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Daisy&backgroundColor=00ff80&radius=50",
+                bio: "Takes care of all the plants at the North Pole",
+                personality: "Gentle and nurturing",
+                hobbies: ["Gardening", "Flower arranging", "Nature walks"],
+                job: "Head Gardener",
+                treats: "Flower-shaped cookies",
+                funFact: "Can make flowers bloom even in the coldest winter!"
+            },
+            {
+                id: 20,
+                name: "Joy",
+                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Joy&backgroundColor=ff00ff&radius=50",
+                bio: "Santa's official joy ambassador",
+                personality: "Joyful and kind",
+                hobbies: ["Spreading joy", "Helping others", "Making friends"],
+                job: "Joy Ambassador",
+                treats: "Smile cookies",
+                funFact: "Once made an entire village happy just by smiling!"
+            }
+        ];
+
+        // ===== STATE MANAGEMENT =====
+        let currentUser = null;
+        let currentElf = null;
+        let selectedElfId = null;
+        let messageHistory = [];
+
+        // ===== DOM ELEMENTS =====
+        const landingPage = document.getElementById('landing');
+        const parentLogin = document.getElementById('parent-login');
+        const parentRegister = document.getElementById('parent-register');
+        const kidLogin = document.getElementById('kid-login');
+        const kidRegister = document.getElementById('kid-register');
+        const elfSelection = document.getElementById('elf-selection');
+        const kidDashboard = document.getElementById('kid-dashboard');
+        const parentDashboard = document.getElementById('parent-dashboard');
+        const elfGrid = document.getElementById('elf-grid');
+        const chatContainer = document.getElementById('chat-container');
+        const messageInput = document.getElementById('message-input');
+
+        // ===== INITIALIZATION =====
+        function init() {
+            createSnow();
+            createLights();
+            renderElves();
+
+            // Set up countdown timer
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+            // Set up form submissions
+            document.getElementById('parentLoginForm').addEventListener('submit', handleParentLogin);
+            document.getElementById('parentRegisterForm').addEventListener('submit', handleParentRegister);
+            document.getElementById('kidLoginForm').addEventListener('submit', handleKidLogin);
+
+            // Set up navigation
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // ===== SNOW ANIMATION =====
+        function createSnow() {
+            const snowContainer = document.getElementById('snow');
+            for (let i = 0; i < 150; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = ['❄', '❅', '❆'][Math.floor(Math.random() * 3)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = Math.random() * 5 + 3 + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                snowflake.style.fontSize = Math.random() * 15 + 10 + 'px';
+                snowContainer.appendChild(snowflake);
+            }
+        }
+
+        // ===== TWINKLING LIGHTS =====
+        function createLights() {
+            const lightsContainer = document.getElementById('lights');
+            for (let i = 0; i < 40; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                light.style.left = Math.random() * 100 + '%';
+                light.style.top = Math.random() * 100 + '%';
+                light.style.width = Math.random() * 6 + 2 + 'px';
+                light.style.height = light.style.width;
+                light.style.animationDelay = Math.random() * 3 + 's';
+                light.style.animationDuration = Math.random() * 2 + 1 + 's';
+                lightsContainer.appendChild(light);
+            }
+        }
+
+        // ===== RENDER ELVES =====
+        function renderElves() {
+            elfGrid.innerHTML = '';
+            elves.forEach(elf => {
+                const card = document.createElement('div');
+                card.className = 'elf-card';
+                card.innerHTML = `
+                    <img src="${elf.image}" alt="${elf.name}">
+                    <h3>${elf.name}</h3>
+                    <p class="bio">${elf.bio}</p>
+                    <div class="details">
+                        <span>🎨 ${elf.personality}</span>
+                        <span>💼 ${elf.job}</span>
+                        <span>🍪 Loves ${elf.treats}</span>
+                    </div>
+                `;
+                card.onclick = () => {
+                    document.querySelectorAll('.elf-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedElfId = elf.id;
+
+                    // Show elf details in a modal or sidebar
+                    document.getElementById('selected-elf-name').textContent = elf.name;
+                    document.getElementById('selected-elf-bio').textContent = elf.bio;
+                };
+                elfGrid.appendChild(card);
+            });
+        }
+
+        // ===== SHOW/HIDE SECTIONS =====
+        function hideAll() {
+            [landingPage, parentLogin, parentRegister, kidLogin, kidRegister,
+             elfSelection, kidDashboard, parentDashboard].forEach(el => {
+                el.classList.add('hidden');
+            });
+        }
+
+        function showParentLogin() { hideAll(); parentLogin.classList.remove('hidden'); }
+        function showParentRegister() { hideAll(); parentRegister.classList.remove('hidden'); }
+        function showKidLogin() { hideAll(); kidLogin.classList.remove('hidden'); }
+        function showKidRegister() { hideAll(); kidRegister.classList.remove('hidden'); }
+        function showElfSelection() { hideAll(); elfSelection.classList.remove('hidden'); }
+        function showKidDashboard() { hideAll(); kidDashboard.classList.remove('hidden'); }
+        function showParentDashboard() { hideAll(); parentDashboard.classList.remove('hidden'); }
+
+        // ===== FORM HANDLERS =====
+        function handleParentLogin(e) {
+            e.preventDefault();
+            // In a real app: validate credentials with backend
+            showParentDashboard();
+        }
+
+        function handleParentRegister(e) {
+            e.preventDefault();
+            // In a real app: create parent account
+            alert('Parent account created! Please login.');
+            showParentLogin();
+        }
+
+        function handleKidLogin(e) {
+            e.preventDefault();
+            // In a real app: validate credentials
+            // For demo, show elf selection
+            showElfSelection();
+        }
+
+        function selectElf() {
+            if (!selectedElfId) {
+                alert('Please select an elf first!');
+                return;
+            }
+
+            currentElf = elves.find(elf => elf.id === selectedElfId);
+
+            // Store selected elf (in a real app, save to database)
+            localStorage.setItem('selectedElf', JSON.stringify(currentElf));
+
+            // Update dashboard
+            document.getElementById('selected-elf-avatar').src = currentElf.image;
+            document.getElementById('selected-elf-name').textContent = currentElf.name;
+            document.getElementById('selected-elf-bio').textContent = currentElf.bio;
+            document.getElementById('elf-name-in-chat').textContent = currentElf.name;
+
+            // Show dashboard
+            showKidDashboard();
+            showMessages();
+
+            // Add welcome message
+            setTimeout(() => {
+                addElfMessage(`Hello, my new friend! I'm ${currentElf.name}, your elf pen pal from the North Pole! I'm so excited to be your friend. What would you like to talk about first?`);
+            }, 500);
+        }
+
+        // ===== DASHBOARD NAVIGATION =====
+        function showMessages() {
+            document.getElementById('messages-section').classList.remove('hidden');
+            document.getElementById('inbox-section').classList.add('hidden');
+            document.getElementById('countdown-section').classList.add('hidden');
+            document.getElementById('inspiration-section').classList.add('hidden');
+            document.getElementById('nav-messages').classList.add('active');
+            document.getElementById('nav-inbox').classList.remove('active');
+            document.getElementById('nav-countdown').classList.remove('active');
+            document.getElementById('nav-inspiration').classList.remove('active');
+        }
+
+        function showInbox() {
+            document.getElementById('messages-section').classList.add('hidden');
+            document.getElementById('inbox-section').classList.remove('hidden');
+            document.getElementById('countdown-section').classList.add('hidden');
+            document.getElementById('inspiration-section').classList.add('hidden');
+            document.getElementById('nav-messages').classList.remove('active');
+            document.getElementById('nav-inbox').classList.add('active');
+            document.getElementById('nav-countdown').classList.remove('active');
+            document.getElementById('nav-inspiration').classList.remove('active');
+
+            // Populate inbox with message history
+            renderInbox();
+        }
+
+        function showCountdown() {
+            document.getElementById('messages-section').classList.add('hidden');
+            document.getElementById('inbox-section').classList.add('hidden');
+            document.getElementById('countdown-section').classList.remove('hidden');
+            document.getElementById('inspiration-section').classList.add('hidden');
+            document.getElementById('nav-messages').classList.remove('active');
+            document.getElementById('nav-inbox').classList.remove('active');
+            document.getElementById('nav-countdown').classList.add('active');
+            document.getElementById('nav-inspiration').classList.remove('active');
+        }
+
+        function showDailyInspiration() {
+            document.getElementById('messages-section').classList.add('hidden');
+            document.getElementById('inbox-section').classList.add('hidden');
+            document.getElementById('countdown-section').classList.add('hidden');
+            document.getElementById('inspiration-section').classList.remove('hidden');
+            document.getElementById('nav-messages').classList.remove('active');
+            document.getElementById('nav-inbox').classList.remove('active');
+            document.getElementById('nav-countdown').classList.remove('active');
+            document.getElementById('nav-inspiration').classList.add('active');
+
+            // Random inspiration quote
+            const quotes = [
+                { quote: "Kindness is Christmas magic.", author: "- Santa Claus" },
+                { quote: "Believe in the impossible.", author: "- The Snowman" },
+                { quote: "Every act of kindness helps Santa.", author: "- Mrs. Claus" },
+                { quote: "The best way to spread Christmas cheer is singing loud for all to hear!", author: "- Buddy the Elf" },
+                { quote: "Christmas isn't a season. It's a feeling.", author: "- Charles Dickens" },
+                { quote: "The magic of Christmas never ends if you keep it in your heart.", author: "- Unknown" },
+                { quote: "Santa Claus is anyone who loves another and seeks to make them happy.", author: "- Edwin Osgood Grover" },
+                { quote: "Christmas waves a magic wand over this world, and behold, everything is softer and more beautiful.", author: "- Norman Vincent Peale" },
+                { quote: "The best Christmas gifts are not the ones under the tree, but the ones around it.", author: "- Unknown" },
+                { quote: "Christmas is doing a little something extra for someone.", author: "- Unknown" }
+                { quote: "Kindness is Christmas magic.", author: "The North Pole" },
+                { quote: "Believe in the impossible.", author: "Santa Claus" },
+                { quote: "Every act of kindness helps Santa.", author: "Head Elf" },
+                { quote: "The best way to spread Christmas cheer is singing loud for all to hear.", author: "Buddy the Elf" },
+                { quote: "Christmas isn't just a day, it's a frame of mind.", author: "Miracle on 34th Street" },
+                { quote: "The magic of Christmas never ends, it just changes form.", author: "The North Pole" },
+                { quote: "Where there is love and kindness, there is Christmas.", author: "Mrs. Claus" },
+                { quote: "Every snowflake is a kiss from heaven.", author: "Crystal the Elf" },
+                { quote: "The greatest gift you can give is your time.", author: "Santa Claus" },
+                { quote: "Christmas is the season of joy, of hope, and of love.", author: "The North Pole" },
+                { quote: "A little more kindness, a little less worry — that's the Christmas way.", author: "Joy the Elf" },
+                { quote: "The warmth of Christmas comes from the heart, not the hearth.", author: "Ember the Elf" },
+                { quote: "Even the smallest light can shine in the darkest night.", author: "Twinkle the Elf" },
+                { quote: "Christmas is a day of meaning and traditions, a special day spent in the warm circle of family and friends.", author: "Margaret Thatcher" },
+                { quote: "When you stop believing in Santa, you get underwear.", author: "The North Pole" },
+                { quote: "Christmas waves a magic wand over this world, and behold, everything is softer and more beautiful.", author: "Norman Vincent Peale" },
+                { quote: "Gifts of time and love are surely the basic ingredients of a truly merry Christmas.", author: "Peggy Bracken" },
+                { quote: "The best of all gifts around any Christmas tree: the presence of a happy family.", author: "Burton Hillis" },
+                { quote: "It's not what's under the tree that matters, it's who's gathered around it.", author: "The North Pole" },
+                { quote: "Christmas is not as much about opening our presents as opening our hearts.", author: "Janice Maeditere" },
+                { quote: "The elf who helps others finds the most magic in Christmas.", author: "Buddy the Elf" },
+                { quote: "Every letter you write to a friend adds a little more magic to the world.", author: "Jingle the Elf" },
+                { quote: "If you look for the magic, you'll find it everywhere at Christmas.", author: "Star the Elf" },
+                { quote: "The North Pole isn't just a place — it's a feeling in your heart.", author: "Noelle the Elf" },
+                { quote: "Being kind is the best way to get on Santa's Nice List.", author: "Santa Claus" },
+                { quote: "A friend is the greatest Christmas gift of all.", author: "Holly the Elf" },
+                { quote: "The stars shine brightest on Christmas Eve.", author: "Luna the Elf" },
+                { quote: "Christmas is the season for kindling the fire of hospitality.", author: "Washington Irving" },
+                { quote: "There's no place like the North Pole for the holidays.", author: "Dash the Elf" },
+                { quote: "The joy of brightening other lives becomes the magic of Christmas.", author: "W.T. Ellis" },
+                { quote: "Every cookie you bake with love makes Santa's journey easier.", author: "Cocoa the Elf" },
+            ];
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('daily-inspiration').textContent = randomQuote.quote;
+            document.querySelector('.inspiration-author').textContent = randomQuote.author;
+        }
+
+        // ===== MESSAGING SYSTEM =====
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addUserMessage(message);
+            messageInput.value = '';
+
+            // Save to history
+            messageHistory.push({
+                sender: 'user',
+                text: message,
+                timestamp: new Date().toISOString()
+            });
+
+            // Simulate elf response
+            setTimeout(() => {
+                const elfResponse = generateElfResponse(message);
+                addElfMessage(elfResponse);
+                messageHistory.push({
+                    sender: 'elf',
+                    text: elfResponse,
+                    timestamp: new Date().toISOString()
+                });
+            }, 1000);
+        }
+
+        function addUserMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user fade-in';
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function addElfMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message elf fade-in';
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function generateElfResponse(userMessage) {
+            // In a real app, this would be an API call to an AI service
+            // For demo, we'll generate responses based on the elf's personality
+
+            const greetings = [
+                `Hello again! ${currentElf.name} here!`,
+                `Hi there, my friend! It's ${currentElf.name}!`,
+                `Merry Christmas! Or should I say, Merry almost-Christmas?`
+            ];
+
+            const questions = [
+                `What's your favorite thing about Christmas?`,
+                `Have you been nice this year? Santa's watching!`,
+                `What would you like for Christmas? Maybe I can help!`,
+                `Do you have any brothers or sisters?`,
+                `What's your favorite Christmas movie?`
+            ];
+
+            const elfFacts = [
+                `Did you know I love ${currentElf.hobbies[0]}? It's my favorite thing to do at the North Pole!`,
+                `As a ${currentElf.job}, I get to see all the magic happen here!`,
+                `My favorite treat is ${currentElf.treats}. Yum!`,
+                `Fun fact about me: ${currentElf.funFact}`
+            ];
+
+            const encouraging = [
+                `That's wonderful! Keep up the good work!`,
+                `You're such a smart kid!`,
+                `I'm so proud of you!`,
+                `Santa's definitely going to bring you something special this year!`
+            ];
+
+            const randomResponses = [
+                `Oh, that's interesting! Here at the North Pole, we...`,
+                `What a great question! Let me think about that...`,
+                `That reminds me of when I was helping Santa and we...`,
+                `Oh my! That's so exciting! Did you know that...`,
+                `Ha ha! That's funny! Speaking of funny things...`,
+                `That's amazing! I wish we had that here at the North Pole.`,
+                `That's so cool! Here at the North Pole, we're always busy with...`,
+                `Oh, I see! That's very interesting. You know, Santa always says...`,
+                `What a lovely thought! It makes me think of all the joy we spread at Christmas time.`
+            ];
+
+            // Combine all possible responses
+            const allResponses = [...greetings, ...questions, ...elfFacts, ...encouraging, ...randomResponses];
+
+            // If the user mentioned something specific, try to respond to it
+            if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
+                return greetings[Math.floor(Math.random() * greetings.length)];
+            } else if (userMessage.toLowerCase().includes('how are you')) {
+                return `I'm wonderful, thank you for asking! The North Pole is always full of joy. How are YOU doing, my friend?`;
+            } else if (userMessage.toLowerCase().includes('what do you do')) {
+                return `I'm a ${currentElf.job} here at the North Pole! ${currentElfFacts[Math.floor(Math.random() * currentElfFacts.length)]}`;
+            } else if (userMessage.toLowerCase().includes('favorite')) {
+                return `My favorite thing is ${currentElf.hobbies[Math.floor(Math.random() * currentElf.hobbies.length)]}! What's your favorite thing to do?`;
+            } else if (userMessage.toLowerCase().includes('santa')) {
+                return `Oh, Santa is wonderful! He's always so busy this time of year. Did you know he has a special list just for kids like you?`;
+            } else if (userMessage.toLowerCase().includes('christmas')) {
+                return `Christmas is the most magical time of the year! Here at the North Pole, we work all year to make it special for children like you!`;
+            } else {
+                return allResponses[Math.floor(Math.random() * allResponses.length)];
+            }
+        }
+
+        function renderInbox() {
+            const inboxList = document.getElementById('inbox-list');
+            if (messageHistory.length === 0) {
+                inboxList.innerHTML = '<p>No letters yet. Start a conversation with your elf!</p>';
+                return;
+            }
+
+            inboxList.innerHTML = '';
+            // Group messages by conversation
+            const conversations = [];
+            let currentConversation = [];
+
+            messageHistory.forEach(message => {
+                currentConversation.push(message);
+                // For demo, we'll just show all messages as separate letters
+                conversations.push([...currentConversation]);
+                currentConversation = [];
+            });
+
+            // Display each message as a letter preview
+            messageHistory.forEach((message, index) => {
+                const letter = document.createElement('div');
+                letter.className = 'letter-preview fade-in';
+
+                const sender = message.sender === 'user' ? 'You' : currentElf.name;
+                const preview = message.text.substring(0, 50) + (message.text.length > 50 ? '...' : '');
+                const date = new Date(message.timestamp).toLocaleDateString();
+
+                letter.innerHTML = `
+                    <h4>${sender}</h4>
+                    <p>${preview}</p>
+                    <div class="meta">
+                        <span>${date}</span>
+                        <span>${message.sender === 'user' ? 'Sent' : 'Received'}</span>
+                    </div>
+                `;
+
+                letter.onclick = () => {
+                    // In a real app, this would show the full conversation
+                    alert(`Full message: ${message.text}`);
+                };
+
+                inboxList.appendChild(letter);
+            });
+        }
+
+        // ===== COUNTDOWN TIMER =====
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+
+            // Set the Christmas date for this year
+            let christmasDate = new Date(currentYear, 11, 25); // December is 11 (0-indexed)
+
+            // If Christmas has passed, set it for next year
+            if (now > christmasDate) {
+                christmasDate = new Date(currentYear + 1, 11, 25);
+            }
+
+            const diff = christmasDate - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // ===== LOGOUT =====
+        function logout() {
+            currentUser = null;
+            currentElf = null;
+            selectedElfId = null;
+            messageHistory = [];
+            localStorage.removeItem('selectedElf');
+            hideAll();
+            landingPage.classList.remove('hidden');
+        }
+
+        // ===== EVENT LISTENERS =====
+        // Allow sending message with Enter key
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize the app when the page loads
+        window.onload = function() {
+            init();
+
+            // Check if there's a saved elf
+            const savedElf = localStorage.getItem('selectedElf');
+            if (savedElf) {
+                currentElf = JSON.parse(savedElf);
+                // In a real app, you might want to auto-login the user
+            }
+        };
+    </script>
+</body>
+</html>
 
 
 
