@@ -212,18 +212,18 @@
         header h1 {
             font-size: 3rem;
             color: var(--gold);
-            text-shadow: var(--shadow-glow-gold);
+            text-shadow: var(--shadow-deep-red);
             margin-bottom: 10px;
             font-family: var(--font-heading);
-            background: var(--gradient-gold);
+            background: var(--gradient-black);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: glow 2s infinite alternate;
         }
 
         @keyframes glow {
-            from { text-shadow: var(--shadow-glow-gold); }
-            to { text-shadow: 0 0 20px var(--gold), 0 0 30px var(--gold), 0 0 40px var(--gold); }
+            from { text-shadow: var(--shadow-deep-green); }
+            to { text-shadow: 0 0 20px var(--bright-green), 0 0 30px var(--gold), 0 0 40px var(--gold); }
         }
 
         header p {
@@ -261,9 +261,9 @@
             color: var(--snow);
         }
 
-        .btn-gold {
-            background: var(--gradient-gold);
-            box-shadow: var(--shadow-glow-gold);
+        .btn-accent {
+            background: var(--gradient-deep-purple);
+            box-shadow: var(--shadow-glow-bright-purple);
         }
 
         .btn:hover {
@@ -285,8 +285,8 @@
         .landing h2 {
             font-size: 2.2rem;
             margin-bottom: 20px;
-            color: var(--gold);
-            text-shadow: var(--shadow-glow-gold);
+            color: var(--deep-green);
+            text-shadow: var(--shadow-glow-bright-red);
         }
 
         .landing p {
@@ -313,8 +313,8 @@
             background: var(--bg-card);
             padding: 30px;
             border-radius: 20px;
-            border: 1px solid var(--gold);
-            box-shadow: var(--shadow-glow-gold);
+            border: 1px solid var(--blue-dark);
+            box-shadow: var(--shadow-glow-blue);
             position: relative;
         }
 
@@ -354,8 +354,8 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 10px var(--gold);
+            border-color: var(--black);
+            box-shadow: 0 0 10px var(--red);
         }
 
         .form-group input::placeholder {
