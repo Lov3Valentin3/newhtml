@@ -1788,8 +1788,7 @@
         }
 
         function generateElfResponse(userMessage) {
-            // In a real app, this would be an API call to an AI service
-            // For demo, we'll generate responses based on the elf's personality
+            // In a real app, this would be an API call to an AI 
 
             const greetings = [
                 `Hello again! ${currentElf.name} here!`,
